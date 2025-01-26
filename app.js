@@ -10,7 +10,6 @@ function main () {
 	/* Add new li and new input */
 	const form = document.querySelector('form')
 	const add = document.querySelector('.btn.btn-primary')
-
 	add.addEventListener('click', (event) => {
 		addNew(form, event)
 	})
@@ -19,20 +18,23 @@ function main () {
 	const allButton = document.querySelector('[data-filter="all"]')
 	const toDoButton = document.querySelector('[data-filter="todo"]')
 	const doneButton = document.querySelector('[data-filter="done"]')
-
 	allButton.addEventListener('click', (event) => {
 		allList(allButton)
 	})
-
 	toDoButton.addEventListener('click', (event) => {
 		toDoList(toDoButton)
 	})
-
 	doneButton.addEventListener('click', (event) => {
 		doneList(doneButton)
 	})
 
 	/* Delete button */
+	const trashs = document.querySelectorAll('li')
+	trashs.forEach((trash) => {
+		trash.children[2].firstElementChild.addEventListener('click', (event) => {
+			trash.remove()
+		})
+	})
 	return (null)
 }
 
@@ -50,7 +52,7 @@ function changeInput(form) {
 	const oldInput = document.querySelector('.form-control')
 
 	const newInput = document.createElement('input')
-	newInput.required = '', newInput.className = 'form-control'
+	newInput.required = '""', newInput.className = 'form-control'
 	newInput.type = 'text', newInput.name = 'title'
 	newInput.placeholder = 'Acheter des patates...'
 
@@ -74,7 +76,7 @@ function addNew(form, event) {
 	const content = data.get('title')
 
 	event.preventDefault()
-	if (content.length > 4) {
+	if (content.length > 1) {
 		addToDoList(content)
 		changeInput(form)
 	}
@@ -121,14 +123,17 @@ function addToDoList(content){
 
 /**
  * function for disable all button before to change one
+ * @param {HTMLElement} button 
  * @returns {null}
  */
-function disableAllbutton() {
+function disableAllbutton(button) {
 	const allButton = document.querySelectorAll('.btn.btn-outline-primary')
 
 	allButton.forEach((button) => {
 		button.className = 'btn btn-outline-primary'
 	})
+
+	button.className = 'btn btn-outline-primary active'
 
 	return (null)
 }
@@ -139,9 +144,7 @@ function disableAllbutton() {
  * @returns {null}
  */
 function allList(allButton) {
-	disableAllbutton()
-
-	allButton.className = 'btn btn-outline-primary active'
+	disableAllbutton(allButton)
 
 	const allLi = document.querySelectorAll('li')
 
@@ -158,9 +161,7 @@ function allList(allButton) {
  * @returns {null}
  */
 function toDoList(toDoButton) {
-	disableAllbutton()
-
-	toDoButton.className = 'btn btn-outline-primary active'
+	disableAllbutton(toDoButton)
 
 	const allLi = document.querySelectorAll('li')
 
@@ -182,9 +183,7 @@ function toDoList(toDoButton) {
  * @returns {null}
  */
 function doneList(doneButton) {
-	disableAllbutton()
-
-	doneButton.className = 'btn btn-outline-primary active'
+	disableAllbutton(doneButton)
 
 	const allLi = document.querySelectorAll('li')
 
